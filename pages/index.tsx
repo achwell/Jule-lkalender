@@ -14,7 +14,6 @@ const Home: NextPage = () => {
 
     const updateUser = async () => {
         const session = await getSession()
-        const sessionUser = await userService.getByEmail(session!.user!.email!)
         if (!session || !session.user || !session.user.email) {
             router.push("/api/auth/signin")
             return

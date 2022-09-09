@@ -4,12 +4,30 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 First, set environment variables in `.env`
 ```bash
-FACEBOOK_ID=<GET FROM FACEBOOK>
-FACEBOOK_SECRET=<GET FROM FACEBOOK>
 NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET=<RANDOM LONG STRING>
 DATABASE_URL=<DATABASE_URL>
 ```
+
+If you want Facebook authentication; add
+```bash
+FACEBOOK_ID=<GET FROM FACEBOOK>
+FACEBOOK_SECRET=<GET FROM FACEBOOK>
+```
+
+If you want Apple authentication; add
+```bash
+APPLE_ID=<GET FROM APPLE>
+APPLE_SECRET=<GET FROM APPLE>
+```
+
+If you want Google authentication; add
+```bash
+GOOGLE_CLIENT_ID=<GET FROM GOOGLE>
+GOOGLE_CLIENT_SECRET=<GET FROM GOOGLE>
+```
+
+For more options: see https://next-auth.js.org/providers/
 
 Then, install:
 
