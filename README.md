@@ -11,11 +11,17 @@ NEXTAUTH_SECRET=<RANDOM LONG STRING>
 DATABASE_URL=<DATABASE_URL>
 ```
 
-Then, run the development server:
+Then, install:
 
 ```bash
-npm run dev
-# or
+yarn install
+prisma db push
+prisma generate
+```
+
+... and run the development server:
+
+```bash
 yarn dev
 ```
 

@@ -29,10 +29,12 @@ yarn-error.log*
 .env*.local
 .env
 
-.idea
-
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
+
+# intelliJ
+.idea
+*.iml
