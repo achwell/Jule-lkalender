@@ -25,7 +25,7 @@ function getProviders() {
         }))
     }
     if (GOOGLE_CLIENT_ID && GOOGLE_CLIENT_SECRET) {
-        providers.push(FacebookProvider({
+        providers.push(GoogleProvider({
             clientId: GOOGLE_CLIENT_ID,
             clientSecret: GOOGLE_CLIENT_SECRET,
         }))

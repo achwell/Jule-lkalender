@@ -93,7 +93,7 @@ const Admin = () => {
 
     const deleteBeer = () => {
         if (calendar && beer) {
-            calendarService.removeBeer(calendar.id, beer.id).then(value => {
+            calendarService.removeBeer(calendar.id, beer.id).then(calendar => {
                 alertService.info(`${beer.name} fjernet fra kalender ${calendar.year}: ${calendar.name}`)
                 updateCalendar(id as string)
                 setShowDeleteDialog(false)
@@ -108,7 +108,7 @@ const Admin = () => {
             updateCalendar(id as string)
             setShowAddDialog(false)
         })
-            .catch(e => {
+            .catch(_ => {
                 alertService.error("Kunne ikke legge til øl")
                 updateCalendar(id as string)
                 setShowAddDialog(false)

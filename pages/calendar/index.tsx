@@ -19,7 +19,6 @@ const Calendars: NextPage = () => {
 
     const updateData = async () => {
         const session = await getSession()
-        const sessionUser = await userService.getByEmail(session!.user!.email!)
         if (!session || !session.user || !session.user.email) {
             router.push("/api/auth/signin")
             return

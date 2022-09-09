@@ -19,7 +19,7 @@ const Edit: NextPage = () => {
 
     const [error, setError] = useState<number>()
 
-    const {control, handleSubmit, formState: {errors}, register, reset, watch} = useForm<Beer>()
+    const {control, handleSubmit, formState: {errors}, register, reset} = useForm<Beer>()
 
     async function updateBeer(id: string) {
         const session = await getSession()

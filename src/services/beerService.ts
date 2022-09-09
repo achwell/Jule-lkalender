@@ -3,8 +3,6 @@ import Beer from "../../types/Beer";
 import BeerWithCalendar from "../../types/BeerWithCalendar";
 import {userService} from "./userService";
 import {calendarService} from "./calendarService";
-import {Simulate} from "react-dom/test-utils";
-
 
 export const beerService = {
     getAll,

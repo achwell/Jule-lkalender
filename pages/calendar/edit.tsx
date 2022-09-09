@@ -18,7 +18,7 @@ const Edit: NextPage = () => {
 
     const [error, setError] = useState<number>()
 
-    const {control, handleSubmit, formState: {errors}, register, reset, watch} = useForm<Calendar>()
+    const {handleSubmit, formState: {errors}, register, reset} = useForm<Calendar>()
 
     async function updateCalendar(id?: string) {
         const session = await getSession()

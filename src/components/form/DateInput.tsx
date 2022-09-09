@@ -17,7 +17,7 @@ const DateInput = ({field, label, error, control}: Props) => {
             name={field}
             rules={{required: true}}
             render={({
-                         field: {onChange, name, value},
+                         field: {onChange, value},
                          fieldState: {invalid}, //optional
                      }) => <>
                          <DatePicker
