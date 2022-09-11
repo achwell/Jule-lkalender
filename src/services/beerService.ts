@@ -25,8 +25,8 @@ const unique = (value: any, index: any, self: any[]) => {
 function getAll(): Promise<Beer[]> {
     return axiosWrapper.get(baseUrl);
 }
-async function getAvalilableBeers(): Promise<{ key: string, value: string }[]> {
-    const taken = (await calendarService.getAllWithBeer()).map(value => value.beerId).filter(unique)
+async function getAvalilableBeers(calendarId: string): Promise<{ key: string; value: string }[]> {
+    const taken = (await calendarService.getAllWithBeer(calendarId)).map(value => value.beerId).filter(unique)
     return (await getAll())
         .filter(value => !taken.includes(value.id))
         .sort((a, b) => {
@@ -44,6 +44,9 @@ async function getAvalilableBeers(): Promise<{ key: string, value: string }[]> {
 }
 async function getUserBeers (userId: string): Promise<BeerWithCalendar[]> {
     const beerWithCalendars = await getAllWithCalendar();
+    beerWithCalendars.sort((a, b) => {
+        return (a.calendarName || "").localeCompare(b.calendarName || "") || (a.day || 0) - (b.day ||0);
+    })
     return beerWithCalendars.filter(value => value.brewerId === userId)
 }
 

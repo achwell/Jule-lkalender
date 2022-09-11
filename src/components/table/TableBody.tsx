@@ -1,3 +1,4 @@
+import React from "react";
 import {flexRender, Row} from "@tanstack/react-table";
 
 interface Props<T> {

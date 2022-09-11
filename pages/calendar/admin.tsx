@@ -40,10 +40,11 @@ const Admin = () => {
             return
         }
         const sessionUser = await userService.getByEmail(session!.user!.email!)
-        if (sessionUser.role === "ADMIN") {
+        const calendarId = calendar?.id;
+        if (sessionUser.role === "ADMIN" && calendarId) {
             setCalendar(calendar);
-            const calendarWithBeers = await calendarService.getAllWithBeer()
-            const availableBeers = await beerService.getAvalilableBeers()
+            const calendarWithBeers = await calendarService.getAllWithBeer(calendarId)
+            const availableBeers = await beerService.getAvalilableBeers(calendarId)
             setCalendarWithBeers(calendarWithBeers)
             setAvailableBeers(availableBeers)
             setError(undefined)
@@ -97,17 +98,22 @@ const Admin = () => {
                 alertService.info(`${beer.name} fjernet fra kalender ${calendar.year}: ${calendar.name}`)
                 updateCalendar(id as string)
                 setShowDeleteDialog(false)
+            }).catch(_ => {
+                alertService.error("Kunne ikke slette øl")
+                updateCalendar(id as string)
+                setShowAddDialog(false)
             })
+
         }
     }
 
     function addBeer(beerCalendar: BeerCalendar) {
         calendarService.addBeer(beerCalendar)
             .then(result => {
-            alertService.info(`Øl lagt til kalender ${calendar?.year}: ${calendar?.name} den ${result.day}.`)
-            updateCalendar(id as string)
-            setShowAddDialog(false)
-        })
+                alertService.info(`Øl lagt til kalender ${calendar?.year}: ${calendar?.name} den ${result.day}.`)
+                updateCalendar(id as string)
+                setShowAddDialog(false)
+            })
             .catch(_ => {
                 alertService.error("Kunne ikke legge til øl")
                 updateCalendar(id as string)

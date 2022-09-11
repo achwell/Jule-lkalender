@@ -22,16 +22,16 @@ function getAll(): Promise<Calendar[]> {
     return axiosWrapper.get(baseUrl)
 }
 
-async function getAllWithBeer(): Promise<CalendarWithBeer[]> {
+async function getAllWithBeer(calendarId: string): Promise<CalendarWithBeer[]> {
     const retVal: CalendarWithBeer[] = []
-    const calendars: Calendar[] = await axiosWrapper.get(baseUrl);
-    for (const calendar of calendars) {
-        const calendarWithBeer: CalendarWithBeer = {
-            ...calendar,
-            beerId: "",
-            beer: "",
-            day: 0
-        }
+    const calendar: Calendar = await getById(calendarId)
+    const calendarWithBeer: CalendarWithBeer = {
+        ...calendar,
+        beerId: "",
+        beer: "",
+        day: 0
+    }
+    if (calendar) {
         for (const beerCalendar of calendar.beerCalendars) {
             const beer = await beerService.getById(beerCalendar.beerId)
             retVal.push({

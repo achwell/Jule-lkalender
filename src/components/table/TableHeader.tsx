@@ -1,24 +1,40 @@
-import {HeaderGroup} from "@tanstack/react-table"
+import React from "react"
+import {Table} from "@tanstack/react-table"
 import TableHeaderCell from "./TableHeaderCell"
 
 interface Props<T> {
-    headerGroups: HeaderGroup<T>[]
+    table: Table<T>
     hasSorting: boolean
+    hasFiltering: boolean
 }
 
-const TableHeader = <T, >({headerGroups, hasSorting}: Props<T>) => {
+const TableHeader = <T, >({table, hasSorting, hasFiltering}: Props<T>) => {
+
+    const headerGroups = table.getHeaderGroups()
 
     if (!headerGroups) {
         return null
     }
+
+    const harGroups = !!headerGroups.length
+
     return (
         <thead>
-        <tr>
-            {headerGroups
-                .map(headerGroup =>
-                    headerGroup.headers.map(header => <TableHeaderCell key={header.id} header={header}
-                                                                       hasSorting={hasSorting}/>))}
-        </tr>
+        {
+            harGroups
+                ? headerGroups.map(headerGroup => (
+                    <tr key={headerGroup.id}>
+                        {headerGroup.headers.map(header =>
+                            <TableHeaderCell key={header.id} table={table} header={header} hasSorting={hasSorting}
+                                             hasFiltering={hasFiltering}/>)}
+                    </tr>
+                ))
+                : headerGroups
+                    .map(headerGroup =>
+                        headerGroup.headers.map(header => <TableHeaderCell key={header.id} table={table} header={header}
+                                                                           hasSorting={hasSorting}
+                                                                           hasFiltering={hasFiltering}/>))
+        }
         </thead>
 
     )

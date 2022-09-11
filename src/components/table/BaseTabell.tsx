@@ -1,26 +1,41 @@
+import React, {useState} from "react"
 import {
     ColumnFiltersState,
+    getCoreRowModel,
+    getFacetedMinMaxValues,
+    getFacetedRowModel,
+    getFacetedUniqueValues,
     getFilteredRowModel,
+    getPaginationRowModel,
     getSortedRowModel,
     SortingState,
     useReactTable
 } from "@tanstack/react-table"
-import {ColumnDef, getCoreRowModel, TableOptions} from "@tanstack/table-core"
+import {ColumnDef, TableOptions} from "@tanstack/table-core"
 import BTable from "react-bootstrap/Table"
 import TableHeader from "./TableHeader"
 import TableBody from "./TableBody"
-import {useState} from "react"
-import {fuzzyFilter} from "./utils";
-import DebouncedInput from "../DebouncedInput";
+import {fuzzyFilter} from "./utils"
+import DebouncedInput from "../DebouncedInput"
+import TablePagination from "./TablePagination"
 
 interface Props<T> {
     columns: ColumnDef<T, any>[]
     data: T[]
     hasSorting?: boolean
     hasFiltering?: boolean
+    hasGlobalFilter?: boolean
+    hasPagination?: boolean
 }
 
-const BaseTabell = <T, >({columns, data, hasSorting = true, hasFiltering = false}: Props<T>) => {
+const BaseTabell = <T, >({
+                             columns,
+                             data,
+                             hasSorting = true,
+                             hasFiltering = false,
+                             hasGlobalFilter = false,
+                             hasPagination = true
+                         }: Props<T>) => {
 
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -57,6 +72,9 @@ const BaseTabell = <T, >({columns, data, hasSorting = true, hasFiltering = false
             getFilteredRowModel: getFilteredRowModel(),
             getSortedRowModel: getSortedRowModel(),
             globalFilterFn: fuzzyFilter,
+            getFacetedRowModel: getFacetedRowModel(),
+            getFacetedUniqueValues: getFacetedUniqueValues(),
+            getFacetedMinMaxValues: getFacetedMinMaxValues(),
             state: {
                 ...options.state,
                 columnFilters,
@@ -64,20 +82,35 @@ const BaseTabell = <T, >({columns, data, hasSorting = true, hasFiltering = false
             }
         }
     }
+
+    if (hasPagination) {
+        options = {
+            ...options,
+            getPaginationRowModel: getPaginationRowModel(),
+        }
+    }
     const table = useReactTable<T>(options)
 
     return (
         <>
-            {hasFiltering && <DebouncedInput
+            {hasFiltering && hasGlobalFilter && <><DebouncedInput
                 value={globalFilter ?? ''}
                 onChange={value => setGlobalFilter(String(value))}
                 className="p-2 font-lg shadow border border-block"
                 placeholder="Globalt søk..."
-            />}
+            />
+                <div className="h-2"/>
+            </>
+            }
+
             <BTable striped bordered hover responsive size="sm">
-                <TableHeader headerGroups={table.getHeaderGroups()} hasSorting={hasSorting}/>
+                <TableHeader
+                    table={table}
+                    hasSorting={hasSorting}
+                    hasFiltering={hasFiltering}/>
                 <TableBody rows={table.getRowModel().rows}/>
             </BTable>
+            {hasPagination && table.getPageCount() > 1 && <TablePagination table={table}/>}
         </>
     )
 }
