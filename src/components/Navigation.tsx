@@ -1,50 +1,45 @@
 import {signOut} from "next-auth/react";
-import Link from "next/link";
-import {Button} from "react-bootstrap";
+import {Button, Container, Nav, Navbar} from "react-bootstrap";
 
 const Navigation = () => {
     return (
-        <nav
-            className="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
-            <div className="container">
-                <a className="navbar-brand" href="">Julekalender</a>
-                <Button className="navbar-toggler" type="button">
-                    <span className="navbar-toggler-icon"></span>
-                </Button>
+        <Navbar as="nav"
+                bg="light" expand="lg"
+                className="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+            <Container>
+                <Navbar.Brand href="">Julekalender</Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav" className="d-sm-inline-flex flex-sm-row-reverse">
+                    <Nav as="ul" className="navbar-nav flex-grow-1">
+                        <Nav.Item as="li" key="/">
+                            <Nav.Link eventKey="/" className="text-light" href="/">
+                                <span className="oi oi-home" aria-hidden="true"></span>
+                                Hjem
+                            </Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item as="li">
+                            <Nav.Link eventKey="calendar" className="text-light" href="/calendar">
+                                <span className="oi oi-calendar" aria-hidden="true"></span>
+                                Kalendere
+                            </Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item as="li">
+                            <Nav.Link eventKey="beers" className="text-light" href="/beers">
+                                <span className="oi oi-beaker" aria-hidden="true"></span>
+                                Mine øl
+                            </Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item as="li">
+                            <Nav.Link eventKey="logout" className="text-light" onClick={() => signOut()}>
+                                <span className="oi oi-account-logout" aria-hidden="true"></span>
+                                Logg ut
+                            </Nav.Link>
+                        </Nav.Item>
+                    </Nav>
+                </Navbar.Collapse>
 
-                <div className="navbar-collapse d-sm-inline-flex flex-sm-row-reverse collapse">
-                    <ul className="navbar-nav flex-grow-1">
-                        <Link href="/">
-                            <a className="nav-link text-light">
-                                <span className="oi home" aria-hidden="true"></span> Hjem
-                            </a>
-                        </Link>
-                        <li className="nav-item">
-                            <Link href="/calendar">
-                                <a className="nav-link text-light">
-                                    <span className="oi oi-calendar" aria-hidden="true"></span> Kalendere
-                                </a>
-                            </Link>
-                        </li>
-
-                        <li className="nav-item">
-                            <Link href="/beers/">
-                                <a className="nav-link text-light">
-                                    <span className="oi oi-beaker" aria-hidden="true"></span> Mine øl
-                                </a>
-                            </Link>
-                        </li>
-
-                        <li className="nav-item">
-                            <a className="nav-link text-light" onClick={() => signOut()}>
-                                <span className="oi oi-account-logout" aria-hidden="true"></span> Logg ut
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-            </div>
-        </nav>
+            </Container>
+        </Navbar>
     )
 }
 export default Navigation

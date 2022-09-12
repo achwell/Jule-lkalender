@@ -12,7 +12,7 @@ import {
     useReactTable
 } from "@tanstack/react-table"
 import {ColumnDef, TableOptions} from "@tanstack/table-core"
-import BTable from "react-bootstrap/Table"
+import {Table} from "react-bootstrap";
 import TableHeader from "./TableHeader"
 import TableBody from "./TableBody"
 import {fuzzyFilter} from "./utils"
@@ -48,9 +48,9 @@ const BaseTabell = <T, >({
         onSortingChange: setSorting,
         filterFns: {fuzzy: fuzzyFilter},
         state: {},
-        debugTable: true,
-        debugHeaders: true,
-        debugColumns: true,
+        debugTable: false,
+        debugHeaders: false,
+        debugColumns: false,
     }
 
     if (hasSorting) {
@@ -103,13 +103,13 @@ const BaseTabell = <T, >({
             </>
             }
 
-            <BTable striped bordered hover responsive size="sm">
+            <Table striped bordered hover responsive size="sm">
                 <TableHeader
                     table={table}
                     hasSorting={hasSorting}
                     hasFiltering={hasFiltering}/>
                 <TableBody rows={table.getRowModel().rows}/>
-            </BTable>
+            </Table>
             {hasPagination && table.getPageCount() > 1 && <TablePagination table={table}/>}
         </>
     )

@@ -61,8 +61,6 @@ const Calendars: NextPage = () => {
         )
     }
 
-    console.log({myBeers})
-
     return (
         <Layout>
             <div className="col-md-6 offset-md-3 mt-5">

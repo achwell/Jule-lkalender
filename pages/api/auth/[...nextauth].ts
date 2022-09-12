@@ -34,6 +34,7 @@ function getProviders() {
 }
 
 export const authOptions: NextAuthOptions = {
-    providers: getProviders(), adapter: PrismaAdapter(prisma)
+    providers: getProviders(),
+    adapter: PrismaAdapter(prisma)
 };
 export default NextAuth(authOptions)
