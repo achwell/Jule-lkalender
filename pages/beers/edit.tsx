@@ -100,8 +100,8 @@ const Edit: NextPage = () => {
                     </div>
                     <Form.Group className="form-group">
                         <Button type="submit" className="btn btn-primary">Lagre</Button>
-                        <Link href={id ? {pathname: "/beers/details/", query: {id}} : "/beers"}>
-                            <a className="btn btn-link active">Avbryt</a>
+                        <Link href={id ? {pathname: "/beers/details/", query: {id}} : "/beers"}  className="btn btn-link active">
+                            Avbryt
                         </Link>
                     </Form.Group>
                 </Form>

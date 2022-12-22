@@ -79,9 +79,7 @@ const Admin = () => {
             header: () => <span></span>,
             cell: ({row: {original: {beerId, beer}}}: CellContext<CalendarWithBeer, any>) =>
                 <>
-                    <Link href={{pathname: "/beers/details/", query: {id: beerId}}}>
-                        <a className="btn btn-sm btn-primary mr-1">Detaljer</a>
-                    </Link>
+                    <Link href={{pathname: "/beers/details/", query: {id: beerId}}} className="btn btn-sm btn-primary mr-1">Detaljer</Link>
                     <a className="btn btn-sm btn-danger btn-delete-user"
                        onClick={() => fjernOel(beerId, beer)}>Fjern!</a>
                 </>
@@ -141,9 +139,7 @@ const Admin = () => {
                     </ul>
 
                     <a className="btn btn-sm btn-success mb-2" onClick={() => setShowAddDialog(true)}>Legg til øl</a>
-                    <Link href={{pathname: "/calendar/edit/", query: {id}}}>
-                        <a className="btn btn-sm btn-success mb-2">Rediger kalender</a>
-                    </Link>
+                    <Link href={{pathname: "/calendar/edit/", query: {id}}} className="btn btn-sm btn-success mb-2">Rediger kalender</Link>
 
                     <StandardTable columns={columns} data={calendarWithBeers}/>
                 </div>

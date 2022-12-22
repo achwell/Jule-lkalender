@@ -47,8 +47,8 @@ const Beers: NextPage = () => {
             header: () => "",
             cell: ({row: {original: {id}}}) => {
                 return (
-                    <Link href={{pathname: "/beers/details/", query: {id}}}>
-                        <a className="btn btn-sm btn-primary mr-1">Detaljer</a>
+                    <Link href={{pathname: "/beers/details/", query: {id}}} className="btn btn-sm btn-primary mr-1">
+                        Detaljer
                     </Link>)
             }
         }),
@@ -74,9 +74,7 @@ const Beers: NextPage = () => {
         <Layout>
             <div className="col-md-6 offset-md-3 mt-5">
                 <h1>Mine øl</h1>
-                <Link href="/beers/edit">
-                    <a className="btn btn-sm btn-success mb-2">Legg til øl</a>
-                </Link>
+                <Link href="/beers/edit" className="btn btn-sm btn-success mb-2">Legg til øl</Link>
                 <StandardTable data={beers} columns={columns}/>
             </div>
         </Layout>

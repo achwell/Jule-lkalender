@@ -37,9 +37,7 @@ const Admin = () => {
         columnHelper.display({
             id: "action",
             cell: ({row: {original: {id}}}: CellContext<Calendar, any>) =>
-                <Link href={{pathname: "/calendar/admin", query: {id}}}>
-                    <a className="btn btn-sm btn-primary mr-1">Rediger</a>
-                </Link>
+                <Link href={{pathname: "/calendar/admin", query: {id}}} className="btn btn-sm btn-primary mr-1">Rediger</Link>
         })
     ]
 
@@ -47,12 +45,8 @@ const Admin = () => {
         <>
             <h2>Administrator</h2>
             <p>Du er en administrator og kan redigere kalendere og hvilke øl som er med</p>
-            <Link href="/calendar/edit">
-                <a className="btn btn-sm btn-success mb-2">Lag ny kalender</a>
-            </Link>
-            <Link href="/admin/beers">
-                <a className="btn btn-sm btn-success mb-2">Se alle registrerte øl</a>
-            </Link>
+            <Link href="/calendar/edit" className="btn btn-sm btn-success mb-2">Lag ny kalender</Link>
+            <Link href="/admin/beers" className="btn btn-sm btn-success mb-2">Se alle registrerte øl</Link>
             <StandardTable data={calendars} columns={columns}/>
         </>
     )

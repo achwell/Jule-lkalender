@@ -150,11 +150,11 @@ const Details: NextPage = () => {
                 </Table>
                 <Button className="btn btn-sm btn-danger btn-delete-user"
                         onClick={() => setShowDeleteDialog(true)}>Slett!</Button>
-                <Link href={{pathname: "/beers/edit/", query: {id: beer?.id}}}>
-                    <a className="btn btn-sm btn-primary mr-1">Rediger</a>
+                <Link href={{pathname: "/beers/edit/", query: {id: beer?.id}}} className="btn btn-sm btn-primary mr-1">
+                    Rediger
                 </Link>
-                <Link href={{pathname: "/beers/"}}>
-                    <a className="btn btn-sm btn-primary mr-1 active">Tilbake</a>
+                <Link href={{pathname: "/beers/"}} className="btn btn-sm btn-primary mr-1 active">
+                    Tilbake
                 </Link>
             </div>
         </Layout>

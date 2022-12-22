@@ -87,9 +87,7 @@ const Edit: NextPage = () => {
                     </div>
                     <Form.Group className="form-group">
                         <Button type="submit" className="btn btn-primary">Lagre</Button>
-                        <Link href="/calendar">
-                            <a className="btn btn-link active">Avbryt</a>
-                        </Link>
+                        <Link href="/calendar" className="btn btn-link active">Avbryt</Link>
                     </Form.Group>
                 </Form>
             </div>
