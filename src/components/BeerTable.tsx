@@ -2,9 +2,9 @@ import {FC} from "react";
 import Link from "next/link";
 import {Row} from "@tanstack/react-table";
 import {createColumnHelper} from "@tanstack/table-core";
-import Beer from "../../../../types/Beer";
-import Review from "../../../../types/Review";
-import StandardTable from "../../../../src/components/table/StandardTable";
+import Beer from "../../types/Beer";
+import Review from "../../types/Review";
+import StandardTable from "../../src/components/table/StandardTable";
 
 export interface BeerDetails {
     calendarId: number

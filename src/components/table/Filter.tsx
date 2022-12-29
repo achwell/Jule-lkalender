@@ -3,7 +3,7 @@ import {useMemo} from "react";
 import DebouncedInput from "../DebouncedInput";
 
 interface Props<T> {
-    column: Column<T, unknown>
+    column: Column<T>
     table: Table<T>
 }
 

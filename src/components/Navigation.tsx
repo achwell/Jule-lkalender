@@ -1,5 +1,5 @@
 import {signOut} from "next-auth/react";
-import {Button, Container, Nav, Navbar} from "react-bootstrap";
+import {Container, Nav, Navbar} from "react-bootstrap";
 
 const Navigation = () => {
     return (

@@ -3,11 +3,11 @@ import Link from "next/link";
 import {useRouter} from "next/router";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {Button, Form} from "react-bootstrap";
-import {alertService, reviewService} from "../../../../src/services";
-import NumberInput from "../../../../src/components/form/NumberInput";
-import TextArea from "../../../../src/components/form/TextArea";
-import User from "../../../../types/User";
-import Review from "../../../../types/Review";
+import {alertService, reviewService} from "../services";
+import NumberInput from "../components/form/NumberInput";
+import TextArea from "../components/form/TextArea";
+import User from "../../types/User";
+import Review from "../../types/Review";
 
 const defaultValues = {
     id: undefined,

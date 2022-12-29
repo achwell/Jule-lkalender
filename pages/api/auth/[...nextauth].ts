@@ -5,8 +5,6 @@ import GoogleProvider from "next-auth/providers/google"
 import {PrismaAdapter} from '@next-auth/prisma-adapter';
 import {PrismaClient} from '@prisma/client';
 import {Provider} from "next-auth/providers";
-import {JWT} from "next-auth/jwt";
-import {Session} from "next-auth/core/types";
 
 const prisma = new PrismaClient();
 

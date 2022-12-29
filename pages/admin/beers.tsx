@@ -5,7 +5,7 @@ import {getSession} from "next-auth/react";
 import {createColumnHelper} from "@tanstack/table-core";
 import {Spinner} from "react-bootstrap";
 import {Layout} from "../../src/components/Layout";
-import {beerService, userService} from "../../src/services";
+import {beerService} from "../../src/services";
 import BeerWithCalendar from "../../types/BeerWithCalendar";
 import StandardTable from "../../src/components/table/StandardTable";
 

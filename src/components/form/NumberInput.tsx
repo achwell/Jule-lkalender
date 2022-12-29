@@ -1,6 +1,4 @@
 import {FieldError, FieldErrorsImpl, Merge} from "react-hook-form";
-import {UseFormRegister} from "react-hook-form/dist/types/form";
-import {FieldValues} from "react-hook-form/dist/types/fields";
 
 interface Props {
     field: string

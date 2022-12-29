@@ -1,4 +1,4 @@
-import axios, {AxiosRequestConfig, AxiosResponse, AxiosInstance, HeadersDefaults} from 'axios'
+import axios, {AxiosRequestConfig, AxiosResponse, AxiosInstance} from 'axios'
 
 export interface IHttpClientRequestParameters<T> {
     url: string

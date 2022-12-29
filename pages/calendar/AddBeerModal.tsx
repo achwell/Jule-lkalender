@@ -16,7 +16,6 @@ interface Props {
 
 const AddBeerModal = ({calendarId, beers, show, hide, callback}: Props) => {
 
-
     const {
         control,
         handleSubmit,

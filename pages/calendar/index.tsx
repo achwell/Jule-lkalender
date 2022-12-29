@@ -11,7 +11,6 @@ import StandardTable from "../../src/components/table/StandardTable";
 import {createColumnHelper} from "@tanstack/table-core";
 import BeerWithCalendar from "../../types/BeerWithCalendar";
 import {fuzzySort} from "../../src/components/table/utils";
-import Calendar from "../../types/Calendar";
 
 const Calendars: NextPage = () => {
 

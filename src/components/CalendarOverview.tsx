@@ -1,7 +1,7 @@
 import {FC, useEffect, useState} from "react";
 import BeerTable, {BeerDetails} from "./BeerTable";
-import {alertService, beerService, calendarService, reviewService} from "../../../../src/services";
-import User from "../../../../types/User";
+import {alertService, beerService, calendarService, reviewService} from "../services";
+import User from "../../types/User";
 
 const CalendarOverview: FC<{calendarId: string, user: User}> = ({calendarId, user}) => {
 

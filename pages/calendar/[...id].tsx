@@ -2,11 +2,11 @@ import {useEffect, useState} from "react";
 import {NextPage} from "next";
 import {useRouter} from "next/router";
 import {getSession} from "next-auth/react";
-import {userService} from "../../../src/services";
-import {Layout} from "../../../src/components/Layout";
-import User from "../../../types/User";
-import CalendarOverview from "./components/CalendarOverview";
-import ReviewPage from "./components/ReviewPage";
+import {userService} from "../../src/services";
+import {Layout} from "../../src/components/Layout";
+import User from "../../types/User";
+import CalendarOverview from "../../src/components/CalendarOverview";
+import ReviewPage from "../../src/components/ReviewPage";
 
 const CalendarView: NextPage = () => {
     const router = useRouter()
