@@ -1,16 +1,16 @@
 import {NextPage} from "next"
 import {useForm, SubmitHandler} from "react-hook-form"
 import {Button, Form} from 'react-bootstrap';
-import {Layout} from "../../src/components/Layout";
+import {Layout} from "../../../src/components/Layout";
 import {getSession} from "next-auth/react";
 import {useEffect, useState} from "react";
 import Link from "next/link";
-import TextInput from "../../src/components/form/TextInput";
+import TextInput from "../../../src/components/form/TextInput";
 import {useRouter} from "next/router";
-import {alertService, calendarService, userService} from "../../src/services";
-import Calendar from "../../types/Calendar";
-import CheckboxInput from "../../src/components/form/CheckboxInput";
-import NumberInput from "../../src/components/form/NumberInput";
+import {alertService, calendarService, userService} from "../../../src/services";
+import Calendar from "../../../types/Calendar";
+import CheckboxInput from "../../../src/components/form/CheckboxInput";
+import NumberInput from "../../../src/components/form/NumberInput";
 
 const Edit: NextPage = () => {
     const router = useRouter()
@@ -63,6 +63,7 @@ const Edit: NextPage = () => {
             : await calendarService.create(calendar)
         const action = calendar.id? "oppdatert" : "opprettet"
         alertService.info(`Kalender ${result.name} ${action}`)
+        router.push("/calendar")
     }
 
     if (error) {
@@ -79,7 +80,7 @@ const Edit: NextPage = () => {
                         <TextInput field="name" label="Navn" error={errors.name}
                                    register={register("name", {required: "Navn er påkrevet"})}/>
                         <NumberInput field="year" label="År" error={errors.year}
-                                   register={register("year", {required: "År er påkrevet"})}/>
+                                   register={register}/>
                         <CheckboxInput field="isPublic" label="Offentlig" error={errors.isPublic}
                                        register={register("isPublic")}/>
                         <CheckboxInput field="archived" label="Arkivert" error={errors.archived}

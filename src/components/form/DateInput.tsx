@@ -1,11 +1,11 @@
-import {Control, Controller, FieldError} from "react-hook-form";
+import {Control, Controller, FieldError, FieldErrorsImpl, Merge} from "react-hook-form";
 import DatePicker, {DateObject} from "react-multi-date-picker";
 import {Form} from "react-bootstrap";
 
 type Props = {
     field: string
     label: string
-    error?: FieldError
+    error: FieldError | Merge<FieldError, FieldErrorsImpl<{}>> | undefined
     control: Control<any>
 };
 

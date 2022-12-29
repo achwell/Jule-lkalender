@@ -11,6 +11,7 @@ import StandardTable from "../../src/components/table/StandardTable";
 import {createColumnHelper} from "@tanstack/table-core";
 import BeerWithCalendar from "../../types/BeerWithCalendar";
 import {fuzzySort} from "../../src/components/table/utils";
+import Calendar from "../../types/Calendar";
 
 const Calendars: NextPage = () => {
 
@@ -53,6 +54,10 @@ const Calendars: NextPage = () => {
         })
     ]
 
+    const viewCalendar = (value: BeerWithCalendar) => {
+        router.push(`/calendar/${value.calendarId}`)
+    }
+
     if (!user) {
         return (
             <Spinner animation="border" role="status">
@@ -69,7 +74,7 @@ const Calendars: NextPage = () => {
 
                 <h2>Mine kalendere</h2>
                 <p>Her ser du en oversikt over dine kalendere og øl.</p>
-                <StandardTable columns={columns} data={myBeers} hasFiltering={true} />
+                <StandardTable columns={columns} data={myBeers} hasFiltering={true} rowCallback={viewCalendar} />
             </div>
         </Layout>
     )

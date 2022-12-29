@@ -2,9 +2,9 @@ import Modal from "react-bootstrap/Modal";
 import {Button, Form} from "react-bootstrap";
 import {useForm} from "react-hook-form"
 import BeerCalendar from "../../types/BeerCalendar";
-import NumberInput from "../../src/components/form/NumberInput";
 import DropdownInput from "../../src/components/form/DropdownInput";
 import {useEffect} from "react";
+import NumberInput from "../../src/components/form/NumberInput";
 
 interface Props {
     calendarId: string
@@ -68,11 +68,10 @@ const AddBeerModal = ({calendarId, beers, show, hide, callback}: Props) => {
                             field="day"
                             label="Dag"
                             step={1}
-                            register={register("day", {
-                                required: "Dag er påkrevet",
-                                max: {value: 24, message: "Siste dag er 24."},
-                                min: {value: 1, message: "Første dag er 1."},
-                            })}
+                            min={1}
+                            max={24}
+                            required={true}
+                            register={register}
                             error={errors.day}/>
                     </div>
                 </Modal.Body>

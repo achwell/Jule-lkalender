@@ -12,8 +12,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     async function createCalendar() {
-        const data = JSON.parse(req.body.body);
-        const calendar = await prisma.calendar.create({data})
+        const calendar = await prisma.calendar.create({data: req.body})
         return res.status(201).json(calendar);
     }
 

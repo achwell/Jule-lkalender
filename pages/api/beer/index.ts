@@ -12,8 +12,10 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     async function createBeer() {
-        const data = JSON.parse(req.body.body);
-        const beer = await prisma.beer.create({data})
+        const {body} = req;
+        body.beerCalendars = !!body.beerCalendars && body.beerCalendars.length > 0 ? beerCalendars : undefined
+        body.id = !! body.id ? body.id : undefined
+        const beer = await prisma.beer.create({data:body})
         return res.status(201).json(beer);
     }
 

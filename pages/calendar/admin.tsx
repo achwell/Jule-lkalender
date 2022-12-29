@@ -92,8 +92,9 @@ const Admin = () => {
 
     const deleteBeer = () => {
         if (calendar && beer) {
+            const {year, name} = calendar
             calendarService.removeBeer(calendar.id, beer.id).then(calendar => {
-                alertService.info(`${beer.name} fjernet fra kalender ${calendar.year}: ${calendar.name}`)
+                alertService.info(`${beer.name} fjernet fra kalender ${year}: ${name}`)
                 updateCalendar(id as string)
                 setShowDeleteDialog(false)
             }).catch(_ => {
@@ -139,7 +140,7 @@ const Admin = () => {
                     </ul>
 
                     <a className="btn btn-sm btn-success mb-2" onClick={() => setShowAddDialog(true)}>Legg til øl</a>
-                    <Link href={{pathname: "/calendar/edit/", query: {id}}} className="btn btn-sm btn-success mb-2">Rediger kalender</Link>
+                    <Link href={{pathname: "/calendar/admin/edit/", query: {id}}} className="btn btn-sm btn-success mb-2">Rediger kalender</Link>
 
                     <StandardTable columns={columns} data={calendarWithBeers}/>
                 </div>

@@ -2,7 +2,7 @@ import {Dropdown, DropdownButton, Form} from "react-bootstrap";
 import {
     Control,
     Controller,
-    FieldError,
+    FieldError, FieldErrorsImpl, Merge,
     UseFormRegisterReturn,
     UseFormSetValue
 } from "react-hook-form";
@@ -13,7 +13,7 @@ interface Props {
     options: { key: string, value: string }[]
     register: UseFormRegisterReturn<string>
     setValue: UseFormSetValue<any>
-    error?: FieldError
+    error: FieldError | Merge<FieldError, FieldErrorsImpl<{}>> | undefined
     control: Control<any>
 }
 

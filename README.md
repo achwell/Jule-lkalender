@@ -32,7 +32,7 @@ For more options: see https://next-auth.js.org/providers/
 Then, install:
 
 ```bash
-yarn install
+npm install
 prisma db push
 prisma generate
 ```
@@ -40,7 +40,7 @@ prisma generate
 ... and run the development server:
 
 ```bash
-yarn dev
+npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

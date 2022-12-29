@@ -5,6 +5,8 @@ import GoogleProvider from "next-auth/providers/google"
 import {PrismaAdapter} from '@next-auth/prisma-adapter';
 import {PrismaClient} from '@prisma/client';
 import {Provider} from "next-auth/providers";
+import {JWT} from "next-auth/jwt";
+import {Session} from "next-auth/core/types";
 
 const prisma = new PrismaClient();
 
@@ -28,6 +30,13 @@ function getProviders() {
         providers.push(GoogleProvider({
             clientId: GOOGLE_CLIENT_ID,
             clientSecret: GOOGLE_CLIENT_SECRET,
+            authorization: {
+                params: {
+                    prompt: "consent",
+                    access_type: "offline",
+                    response_type: "code"
+                }
+            }
         }))
     }
     return providers;
@@ -35,6 +44,11 @@ function getProviders() {
 
 export const authOptions: NextAuthOptions = {
     providers: getProviders(),
-    adapter: PrismaAdapter(prisma)
+    adapter: PrismaAdapter(prisma),
+    events: {
+        async signOut() {
+            console.log("signOut")
+        }
+    }
 };
 export default NextAuth(authOptions)

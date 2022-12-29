@@ -1,4 +1,4 @@
-import {axiosWrapper} from "../../helpers/axiosWrapper";
+import {HttpClient} from "../../helpers/axiosWrapper";
 import Beer from "../../types/Beer";
 import BeerWithCalendar from "../../types/BeerWithCalendar";
 import {userService} from "./userService";
@@ -18,12 +18,14 @@ export const beerService = {
 
 const baseUrl = "/api/beer";
 
+const httpClient = new HttpClient()
+
 const unique = (value: any, index: any, self: any[]) => {
     return self.indexOf(value) === index
 }
 
 function getAll(): Promise<Beer[]> {
-    return axiosWrapper.get(baseUrl);
+    return httpClient.get<Beer[]>({url: baseUrl});
 }
 async function getAvalilableBeers(calendarId: string): Promise<{ key: string; value: string }[]> {
     const taken = (await calendarService.getAllWithBeer(calendarId)).map(value => value.beerId).filter(unique)
@@ -59,6 +61,7 @@ async function getAllWithCalendar(): Promise<BeerWithCalendar[]> {
             ...beer,
             brewer: user.name,
             brewerId: user.id,
+            calendarId: 0,
             archived: false,
             calendarName: "",
             day: 0,
@@ -75,6 +78,7 @@ async function getAllWithCalendar(): Promise<BeerWithCalendar[]> {
                 retVal.push({
                     ...beerWithCalendar,
                     calendarName: calendar.name,
+                    calendarId: calendar.id,
                     year: calendar.year,
                     day: beerCalendar.day,
                     archived: calendar.archived,
@@ -88,22 +92,30 @@ async function getAllWithCalendar(): Promise<BeerWithCalendar[]> {
 
 function getByUserId(id: string): Promise<Beer[]> {
     const url = `${baseUrl}/user${id}`;
-    return axiosWrapper.get(url);
+    return httpClient.get<Beer[]>({url});
 }
 
 function getById(id: string): Promise<Beer> {
     const url = `${baseUrl}/${id}`;
-    return axiosWrapper.get(url);
+    return httpClient.get<Beer>({url});
 }
 
 function create(beer: Beer): Promise<Beer> {
-    return axiosWrapper.post(baseUrl, beer);
+    let payload: Partial<Beer> = beer;
+    if (!beer.beerCalendars || beer.beerCalendars.length == 0) {
+        payload.beerCalendars = undefined
+    }
+    return httpClient.post<Partial<Beer>>({url: baseUrl, payload});
 }
 
 function update(id: string, beer: Beer): Promise<Beer> {
-    return axiosWrapper.put(`${baseUrl}/${id}`, beer);
+    let payload: Partial<Beer> = beer;
+    if (!beer.beerCalendars || beer.beerCalendars.length == 0) {
+        payload.beerCalendars = undefined
+    }
+    return httpClient.put<Partial<Beer>>({url: `${baseUrl}/${id}`, payload});
 }
 
 function _delete(id: string): Promise<Beer> {
-    return axiosWrapper.delete(`${baseUrl}/${id}`);
+    return httpClient.delete<Beer>({url: `${baseUrl}/${id}`});
 }

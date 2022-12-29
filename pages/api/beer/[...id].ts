@@ -26,7 +26,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     async function getBeerById(id: string) {
-        const beer = await prisma.beer.findUnique({where: {id}})
+        const beer = await prisma.beer.findUnique({where: {id}, include: {beerCalendars: true}})
         return res.status(200).json(beer);
     }
 

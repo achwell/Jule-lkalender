@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Account {
-  id                String  @id @default(cuid())
+  id                String  @id @default(uuid())
   userId            String
   type              String
   provider          String
@@ -30,7 +30,7 @@ model Account {
 }
 
 model Session {
-  id           String   @id @default(cuid())
+  id           String   @id @default(uuid())
   sessionToken String   @unique
   userId       String
   expires      DateTime
@@ -43,7 +43,7 @@ enum Role {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String    @id @default(uuid())
   name          String?
   email         String?   @unique
   emailVerified DateTime?
@@ -52,6 +52,7 @@ model User {
   sessions      Session[]
   role          Role      @default(USER)
   beers         Beer[]
+  Review        Review[]
 }
 
 model VerificationToken {
@@ -63,39 +64,63 @@ model VerificationToken {
 }
 
 model Beer {
-  id           String         @id @default(cuid())
-  name         String
-  style        String
-  description  String?
-  abv          Float?
-  ibu          Int?
-  ebc          Int?
-  recipe       String?
-  untapped     String?
-  brewedDate   DateTime?
-  bottleDate   DateTime?
-  userId       String
-  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id            String         @id @default(uuid())
+  name          String
+  style         String
+  description   String?
+  abv           Float?
+  ibu           Int?
+  ebc           Int?
+  recipe        String?
+  untapped      String?
+  brewedDate    DateTime?
+  bottleDate    DateTime?
+  userId        String
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   beerCalendars BeerCalendar[]
+  rewiews       Review[]
 }
 
 model Calendar {
-  id           String         @id @default(cuid())
-  name         String
-  year         Int
-  isPublic     Boolean
-  archived     Boolean
+  id            String         @id @default(uuid())
+  name          String
+  year          Int
+  isPublic      Boolean
+  archived      Boolean
   beerCalendars BeerCalendar[]
+  Review        Review[]
+
   @@unique([year, name])
 }
 
 model BeerCalendar {
-  id         String   @id @default(cuid())
+  id         String   @id @default(uuid())
   day        Int
   beerId     String
   calendarId String
   beer       Beer     @relation(fields: [beerId], references: [id], onDelete: Cascade)
   calendar   Calendar @relation(fields: [calendarId], references: [id], onDelete: Cascade)
+
   @@unique([beerId, calendarId])
   @@unique([day, calendarId])
+}
+
+model Review {
+  id            String   @id @default(uuid())
+  beerId        String
+  calendarId    String
+  reviewerId    String
+  ratingLabel   Float
+  ratingLooks   Float
+  ratingSmell   Float
+  ratingTaste   Float
+  ratingFeel    Float
+  ratingOverall Float
+  comment       String?
+  createdAt     DateTime
+  beer          Beer     @relation(fields: [beerId], references: [id], onDelete: Cascade)
+  calendar      Calendar @relation(fields: [calendarId], references: [id], onDelete: Cascade)
+  reviewer      User     @relation(fields: [reviewerId], references: [id], onDelete: Cascade)
+
+  @@unique([beerId, calendarId, reviewerId])
 }

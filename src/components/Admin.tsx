@@ -45,7 +45,7 @@ const Admin = () => {
         <>
             <h2>Administrator</h2>
             <p>Du er en administrator og kan redigere kalendere og hvilke øl som er med</p>
-            <Link href="/calendar/edit" className="btn btn-sm btn-success mb-2">Lag ny kalender</Link>
+            <Link href="/calendar/admin/edit" className="btn btn-sm btn-success mb-2">Lag ny kalender</Link>
             <Link href="/admin/beers" className="btn btn-sm btn-success mb-2">Se alle registrerte øl</Link>
             <StandardTable data={calendars} columns={columns}/>
         </>

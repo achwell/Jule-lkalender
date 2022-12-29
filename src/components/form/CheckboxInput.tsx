@@ -1,10 +1,10 @@
-import {FieldError, UseFormRegisterReturn} from "react-hook-form";
+import {FieldError, FieldErrorsImpl, Merge, UseFormRegisterReturn} from "react-hook-form";
 import {Form, FormCheck} from "react-bootstrap";
 
 interface Props {
     field: string
     label: string
-    error?: FieldError
+    error: FieldError | Merge<FieldError, FieldErrorsImpl<{}>> | undefined
     register: UseFormRegisterReturn<string>
 }
 

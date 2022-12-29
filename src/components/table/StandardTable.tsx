@@ -7,15 +7,17 @@ interface Props<T> {
     hasFiltering?: boolean
     hasGlobalFilter?: boolean
     hasPagination?: boolean
+    rowCallback?: (value: T) => void
 }
 
-const StandardTable = <T, >({columns, data, hasFiltering = false, hasGlobalFilter = false, hasPagination = false}: Props<T>) => {
+const StandardTable = <T, >({columns, data, hasFiltering = false, hasGlobalFilter = false, hasPagination = false, rowCallback}: Props<T>) => {
     return <BaseTabell
         data={data}
         columns={columns}
         hasSorting={true}
         hasFiltering={hasFiltering}
         hasGlobalFilter={hasGlobalFilter}
-        hasPagination={hasPagination}/>
+        hasPagination={hasPagination}
+        rowCallback={rowCallback}/>
 }
 export default StandardTable

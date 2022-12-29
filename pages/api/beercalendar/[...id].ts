@@ -29,7 +29,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
 
     async function updateBeerCalendar(id: string) {
         try {
-            const data = JSON.parse(req.body.body);
+            const data = req.body;
             const beerCalendar = await prisma.beerCalendar.update({where: {id}, data})
             return res.status(200).json(beerCalendar);
         } catch (error) {

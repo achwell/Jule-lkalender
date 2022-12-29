@@ -1,4 +1,4 @@
-import {FieldError, UseFormRegisterReturn} from "react-hook-form";
+import {FieldError, FieldErrorsImpl, Merge, UseFormRegisterReturn} from "react-hook-form";
 import {Form} from "react-bootstrap";
 
 interface Props {
@@ -6,7 +6,7 @@ interface Props {
     label: string
     rows?: number
     cols?: number
-    error?: FieldError
+    error: FieldError | Merge<FieldError, FieldErrorsImpl<{}>> | undefined
     register: UseFormRegisterReturn<string>
 }
 

@@ -1,4 +1,4 @@
-import {axiosWrapper} from "../../helpers/axiosWrapper";
+import {HttpClient} from "../../helpers/axiosWrapper";
 import User from "../../types/User";
 
 export const userService = {
@@ -12,26 +12,28 @@ export const userService = {
 
 const baseUrl = "/api/user";
 
+const httpClient = new HttpClient()
+
 function getAll(): Promise<User[]> {
-    return axiosWrapper.get(baseUrl);
+    return httpClient.get<User[]>({url: baseUrl});
 }
 
 function getById(id: string): Promise<User> {
-    return axiosWrapper.get(`${baseUrl}/${id}`);
+    return httpClient.get<User>({url: `${baseUrl}/${id}`});
 }
 
 function getByEmail(email: string): Promise<User> {
-    return axiosWrapper.get(`${baseUrl}/email${email}`);
+    return httpClient.get<User>({url:`${baseUrl}/email${email}`});
 }
 
 function create(user: User): Promise<User>  {
-    return axiosWrapper.post(baseUrl, user);
+    return httpClient.post<User>({url: baseUrl, payload: user});
 }
 
 function update(id: string, user: User): Promise<User>  {
-    return axiosWrapper.put(`${baseUrl}/${id}`, user);
+    return httpClient.put<User>({url: `${baseUrl}/${id}`, payload: user});
 }
 
 function _delete(id: string): Promise<User>  {
-    return axiosWrapper.delete(`${baseUrl}/${id}`);
+    return httpClient.delete<User>({url: `${baseUrl}/${id}`});
 }

@@ -26,6 +26,7 @@ interface Props<T> {
     hasFiltering?: boolean
     hasGlobalFilter?: boolean
     hasPagination?: boolean
+    rowCallback?: (value: T) => void
 }
 
 const BaseTabell = <T, >({
@@ -34,7 +35,8 @@ const BaseTabell = <T, >({
                              hasSorting = true,
                              hasFiltering = false,
                              hasGlobalFilter = false,
-                             hasPagination = true
+                             hasPagination = true,
+                             rowCallback
                          }: Props<T>) => {
 
     const [sorting, setSorting] = useState<SortingState>([])
@@ -108,7 +110,7 @@ const BaseTabell = <T, >({
                     table={table}
                     hasSorting={hasSorting}
                     hasFiltering={hasFiltering}/>
-                <TableBody rows={table.getRowModel().rows}/>
+                <TableBody rows={table.getRowModel().rows} rowCallback={rowCallback}/>
             </Table>
             {hasPagination && table.getPageCount() > 1 && <TablePagination table={table}/>}
         </>
