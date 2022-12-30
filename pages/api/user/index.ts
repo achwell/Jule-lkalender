@@ -18,7 +18,11 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     async function getUsers() {
-        const users = await prisma.user.findMany()
+        const users = await prisma.user.findMany({
+            include: {
+                beers: true,
+            },
+        })
         return res.status(200).json(users);
     }
 }

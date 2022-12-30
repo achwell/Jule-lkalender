@@ -4,7 +4,7 @@ import {useRouter} from "next/router";
 import {getSession} from "next-auth/react";
 import {Layout} from "../../src/components/Layout";
 import User from "../../types/User";
-import {userService} from "../../src/services";
+import {alertService, userService} from "../../src/services";
 import UserForm from "../../src/components/UserForm";
 
 const UserPage: NextPage = () => {
@@ -26,6 +26,7 @@ const UserPage: NextPage = () => {
     useEffect(() => {
         updateUser()
     }, [])
+
     return (
         <Layout>
             <div className="col-md-6 offset-md-3 mt-5">

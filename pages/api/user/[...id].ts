@@ -23,6 +23,9 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
         const user = await prisma.user.findUnique({
             where: {
                 id
+            },
+            include: {
+                beers: true,
             }
         })
         return res.status(200).json(user);
@@ -32,6 +35,9 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
         const user = await prisma.user.findUnique({
             where: {
                 email
+            },
+            include: {
+                beers: true,
             }
         })
         return res.status(200).json(user);
