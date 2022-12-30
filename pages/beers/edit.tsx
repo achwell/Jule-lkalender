@@ -6,11 +6,11 @@ import {Layout} from "../../src/components/Layout";
 import {getSession} from "next-auth/react";
 import {useEffect, useState} from "react";
 import Link from "next/link";
-import TextInput from "../../src/components/form/TextInput";
-import TextArea from "../../src/components/form/TextArea";
 import DateInput from "../../src/components/form/DateInput";
 import {useRouter} from "next/router";
 import {alertService, beerService, userService} from "../../src/services";
+import TextInput from "../../src/components/form/TextInput";
+import TextArea from "../../src/components/form/TextArea";
 import NumberInput from "../../src/components/form/NumberInput";
 
 const Edit: NextPage = () => {
@@ -19,7 +19,9 @@ const Edit: NextPage = () => {
 
     const [error, setError] = useState<number>()
 
-    const {control, handleSubmit, formState: {errors}, register, reset} = useForm<Beer>()
+    const {control, handleSubmit, formState: {errors}, register, reset, watch} = useForm<Beer>()
+
+    const {bottleDate, brewedDate} = watch()
 
     async function getSessionUser() {
         const session = await getSession()
@@ -131,27 +133,22 @@ const Edit: NextPage = () => {
 
                 <Form onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-row">
-                        <TextInput field="name" label="Navn" error={errors.name}
-                                   register={register("name", {required: "Navn er påkrevet"})}/>
-                        <TextInput field="style" label="Stil" error={errors.style}
-                                   register={register("style", {required: "Stil er påkrevet"})}/>
-                        <TextArea field="description" label="Beskrivelse" rows={5} error={errors.description}
-                                  register={register("description")}/>
+                        <TextInput<Beer> id="name" name="name" label="Navn" placeholder="Navn" register={register} rules={{ required: 'Navn er påkrevet' }} errors={errors}/>
+                        <TextInput<Beer> id="style" name="style" label="Stil" placeholder="Stil" register={register} rules={{ required: 'Stil er påkrevet' }} errors={errors}/>
+                        <TextArea<Beer> id="description" name="description" label="Beskrivelse" placeholder="Beskrivelse" register={register} errors={errors} rows={5}/>
                     </div>
                     <div className="form-row">
-                        <NumberInput field="abv" label="Abv" error={errors.abv} register={register}/>
-                        <NumberInput field="ibu" label="Ibu" error={errors.ibu} register={register}/>
-                        <NumberInput field="ebc" label="Ebc" error={errors.ebc} register={register}/>
+                        <NumberInput<Beer> id="abv" name="abv" label="Abv" placeholder="Abv" register={register} errors={errors}/>
+                        <NumberInput<Beer> id="ibu" name="ibu" label="Ibu" placeholder="Ibu" register={register} errors={errors}/>
+                        <NumberInput<Beer> id="ebc" name="ebc" label="Ebc" placeholder="Ebc" register={register} errors={errors}/>
                     </div>
                     <div className="form-row">
-                        <TextInput field="recipe" label="Link til oppskrift" error={errors.recipe}
-                                   register={register("recipe")}/>
-                        <TextInput field="untapped" label="Link til UnTapped" error={errors.untapped}
-                                   register={register("untapped")}/>
+                        <TextInput<Beer> id="recipe" name="recipe" label="Link til oppskrift" placeholder="Link til oppskrift" register={register} errors={errors}/>
+                        <TextInput<Beer> id="untapped" name="untapped" label="Link til UnTapped" placeholder="Link til UnTapped" register={register} errors={errors}/>
                     </div>
                     <div className="form-row">
-                        <DateInput field="brewedDate" label="Bryggedato" control={control}/>
-                        <DateInput field="bottleDate" label="Tappedato" control={control}/>
+                        <DateInput<Beer> id="brewedDate" name="brewedDate" label="Bryggedato" placeholder="Bryggedato" control={control} errors={errors}/>
+                        <DateInput<Beer> id="bottleDate" name="bottleDate" label="Tappedato" placeholder="Tappedato" control={control} errors={errors}/>
                     </div>
                     <Form.Group className="form-group">
                         <Button type="submit" className="btn btn-primary">Lagre</Button>

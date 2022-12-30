@@ -4,10 +4,10 @@ import {useRouter} from "next/router";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {Button, Form} from "react-bootstrap";
 import {alertService, reviewService} from "../services";
-import NumberInput from "../components/form/NumberInput";
-import TextArea from "../components/form/TextArea";
 import User from "../../types/User";
 import Review from "../../types/Review";
+import TextArea from "./form/TextArea";
+import NumberInput from "./form/NumberInput";
 
 const defaultValues = {
     id: undefined,
@@ -106,20 +106,13 @@ const ReviewPage: FC<{ calendarId: string, beerId: string, user: User }> = ({cal
             <h1>{!!formId ? "Rediger din stemme" : "Gi din stemme"}</h1>
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-row">
-                    <NumberInput field="ratingTaste" label="Smak" error={errors.ratingTaste} min={0} max={6}
-                                 step={0.1} register={register}/>
-                    <NumberInput field="ratingSmell" label="Lukt" error={errors.ratingSmell} min={0} max={6}
-                                 step={0.1} register={register}/>
-                    <NumberInput field="ratingLooks" label="Utseende" error={errors.ratingLooks} min={0} max={6}
-                                 step={0.1} register={register}/>
-                    <NumberInput field="ratingFeel" label="Følelse" error={errors.ratingFeel} min={0} max={6}
-                                 step={0.1} register={register}/>
-                    <NumberInput field="ratingLabel" label="Etikett" error={errors.ratingLabel} min={0} max={6}
-                                 step={0.1} register={register}/>
-                    <NumberInput field="ratingOverall" label="Overall" error={errors.ratingOverall} min={0} max={6}
-                                 step={0.1} register={register}/>
-                    <TextArea field="comment" label="Kommentar" rows={5} error={errors.comment}
-                              register={register("comment")}/>
+                    <NumberInput<Review> id="ratingTaste" name="ratingTaste" label="Smak" placeholder="Smak" min={0} max={6} step={0.1} register={register} rules={{ required: 'Smak er påkrevet' }} errors={errors}/>
+                    <NumberInput<Review> id="ratingSmell" name="ratingSmell" label="Lukt" placeholder="Lukt" min={0} max={6} step={0.1} register={register} rules={{ required: 'Lukt er påkrevet' }} errors={errors}/>
+                    <NumberInput<Review> id="ratingLooks" name="ratingLooks" label="Utseende" placeholder="Utseende" min={0} max={6} step={0.1} register={register} rules={{ required: 'Utseende er påkrevet' }} errors={errors}/>
+                    <NumberInput<Review> id="ratingFeel" name="ratingFeel" label="Følelse" placeholder="Følelse" min={0} max={6} step={0.1} register={register} rules={{ required: 'Følelse er påkrevet' }} errors={errors}/>
+                    <NumberInput<Review> id="ratingLabel" name="ratingLabel" label="Etikett" placeholder="Etikett" min={0} max={6} step={0.1} register={register} rules={{ required: 'Etikett er påkrevet' }} errors={errors}/>
+                    <NumberInput<Review> id="ratingOverall" name="ratingOverall" label="Overall" placeholder="Overall" min={0} max={6} step={0.1} register={register} rules={{ required: 'Overall er påkrevet' }} errors={errors}/>
+                    <TextArea id="comment" name="comment" label="Kommentar" placeholder="Kommentar" register={register} errors={errors} rows={5}/>
                 </div>
                 <Form.Group className="form-group">
                     <Button type="submit" className="btn btn-primary">Send!</Button>

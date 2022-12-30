@@ -81,3 +81,6 @@ textarea.form-control.invalid {
 .rmdp-container {
     padding-left: 24px
 }
+.fullWidth {
+    width: 100%;
+}

@@ -1,14 +1,14 @@
+import {useEffect} from "react";
 import Modal from "react-bootstrap/Modal";
 import {Button, Form} from "react-bootstrap";
 import {useForm} from "react-hook-form"
 import BeerCalendar from "../../types/BeerCalendar";
-import DropdownInput from "../../src/components/form/DropdownInput";
-import {useEffect} from "react";
 import NumberInput from "../../src/components/form/NumberInput";
+import DropdownInput, {Options} from "../../src/components/form/DropdownInput";
 
 interface Props {
     calendarId: string
-    beers: { key: string, value: string }[]
+    beers: Options[]
     show: boolean
     hide: () => void
     callback: (beerCalendar: BeerCalendar) => void
@@ -16,17 +16,10 @@ interface Props {
 
 const AddBeerModal = ({calendarId, beers, show, hide, callback}: Props) => {
 
-    const {
-        control,
-        handleSubmit,
-        formState: {errors},
-        register,
-        reset,
-        setValue
-    } = useForm<BeerCalendar>({defaultValues: {id: undefined, calendarId, day: 1, beerId: undefined}})
+    const {handleSubmit, formState: {errors}, register, reset} = useForm<BeerCalendar>({defaultValues: {id: undefined, calendarId, day: 1, beerId: undefined}})
 
     async function updateBeerCalendar(calendarId: string) {
-        if(calendarId) {
+        if (calendarId) {
             reset({id: undefined, calendarId, day: 1, beerId: undefined})
         }
 
@@ -54,24 +47,22 @@ const AddBeerModal = ({calendarId, beers, show, hide, callback}: Props) => {
                     Her listes alle øl som ikke har en kalender. Du kan velge øl og hvilken dag den skal komme på i den
                     gitte kalenderen.
                     <div className="form-row">
-                        <DropdownInput
-                            control={control}
-                            label="Velg øl"
-                            field="beerId"
-                            setValue={setValue}
-                            error={errors.beerId}
-                            options={beers}
-                            register={register("beerId", {required: "Du må velge et øl"})}
-                        />
-                        <NumberInput
-                            field="day"
+                        <DropdownInput<BeerCalendar> id="beerId" name="beerId" label="Velg øl" options={beers} register={register} rules={{required: "Du må velge et øl"}} errors={errors}/>
+                        <NumberInput<BeerCalendar>
+                            id="day"
+                            name="day"
                             label="Dag"
+                            placeholder="Dag"
                             step={1}
                             min={1}
                             max={24}
-                            required={true}
                             register={register}
-                            error={errors.day}/>
+                            rules={{
+                                required: "Dag er påkrevet",
+                                min: {value: 1, message: "Tidligste dag er 1"},
+                                max: {value: 24, message: "Seneste dag er 24"}
+                            }}
+                            errors={errors}/>
                     </div>
                 </Modal.Body>
                 <Modal.Footer>

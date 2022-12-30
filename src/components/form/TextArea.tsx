@@ -1,20 +1,52 @@
-import {FieldError, FieldErrorsImpl, Merge, UseFormRegisterReturn} from "react-hook-form";
-import {Form} from "react-bootstrap";
+import React, {DetailedHTMLProps, TextareaHTMLAttributes} from 'react';
+import classNames from 'classnames';
+import {RegisterOptions, DeepMap, FieldError, UseFormRegister, Path,} from 'react-hook-form';
+import get from 'lodash.get';
+import {ErrorMessage} from '@hookform/error-message';
+import {FormErrorMessage} from "./FormErrorMessage";
 
-interface Props {
-    field: string
-    label: string
-    rows?: number
-    cols?: number
-    error: FieldError | Merge<FieldError, FieldErrorsImpl<{}>> | undefined
-    register: UseFormRegisterReturn<string>
-}
+export type FormTextareaProps<TFormValues> = {
+    id: string;
+    name: Path<TFormValues>;
+    label: string;
+    className?: string;
+    rules?: RegisterOptions;
+    register?: UseFormRegister<TFormValues>;
+    errors?: Partial<DeepMap<TFormValues, FieldError>>;
+} & DetailedHTMLProps<TextareaHTMLAttributes<HTMLTextAreaElement>,
+    HTMLTextAreaElement>;
 
-function TextArea({ field, label, rows, cols, error, register }: Props) {
-    return <Form.Group controlId={field} className="form-group col" style={{width: "100%"}}>
-        <Form.Label>{label}</Form.Label>
-        <textarea id={field} rows={rows} cols={cols} className={error ? "invalid" : ""} style={{width: "100%"}} {...register}></textarea>
-        {error && <span className="validation-message invalid">{error.message}</span>}
-    </Form.Group>;
-}
+const TextArea = <TFormValues extends Record<string, any>>({
+                                                                    id,
+                                                                    name,
+                                                                    label,
+                                                                    register,
+                                                                    rules,
+                                                                    errors,
+                                                                    className,
+                                                                    ...props
+                                                                }: FormTextareaProps<TFormValues>): JSX.Element => {
+    const errorMessages = get(errors, name);
+    const hasError = !!(errors && errorMessages);
+
+    return (
+        <div className={classNames("form-group col fullWidth", className)} aria-live="polite">
+            {label && <label className="form-label" htmlFor={name}>{label}</label>}
+            <textarea
+                id={id}
+                name={name}
+                aria-label={label}
+                aria-invalid={!!(hasError && errorMessages)}
+                className={classNames('fullWidth', hasError ? '' : 'invalid')}
+                {...props}
+                {...(register && register(name, rules))}
+            />
+            <ErrorMessage
+                errors={errors}
+                name={name as any}
+                render={({message}) => <FormErrorMessage className={classNames({'invalid': hasError})}>{message}</FormErrorMessage>}
+            />
+        </div>
+    );
+};
 export default TextArea

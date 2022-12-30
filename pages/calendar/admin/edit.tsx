@@ -5,12 +5,12 @@ import {Layout} from "../../../src/components/Layout";
 import {getSession} from "next-auth/react";
 import {useEffect, useState} from "react";
 import Link from "next/link";
-import TextInput from "../../../src/components/form/TextInput";
 import {useRouter} from "next/router";
 import {alertService, calendarService, userService} from "../../../src/services";
 import Calendar from "../../../types/Calendar";
-import CheckboxInput from "../../../src/components/form/CheckboxInput";
+import TextInput from "../../../src/components/form/TextInput";
 import NumberInput from "../../../src/components/form/NumberInput";
+import CheckboxInput from "../../../src/components/form/CheckboxInput";
 
 const Edit: NextPage = () => {
     const router = useRouter()
@@ -77,14 +77,10 @@ const Edit: NextPage = () => {
 
                 <Form onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-row">
-                        <TextInput field="name" label="Navn" error={errors.name}
-                                   register={register("name", {required: "Navn er påkrevet"})}/>
-                        <NumberInput field="year" label="År" error={errors.year}
-                                   register={register}/>
-                        <CheckboxInput field="isPublic" label="Offentlig" error={errors.isPublic}
-                                       register={register("isPublic")}/>
-                        <CheckboxInput field="archived" label="Arkivert" error={errors.archived}
-                                       register={register("archived")}/>
+                        <TextInput<Calendar> id="name" name="name" label="Navn" placeholder="Navn" register={register} rules={{ required: 'Navn er påkrevet' }} errors={errors}/>
+                        <NumberInput<Calendar> id="year" name="year" label="År" placeholder="År" register={register} rules={{ required: 'År er påkrevet' }} errors={errors}/>
+                        <CheckboxInput<Calendar> id="isPublic" name="isPublic" label="Offentlig" register={register} errors={errors}/>
+                        <CheckboxInput<Calendar> id="archived" name="archived" label="Arkivert" register={register} errors={errors}/>
                     </div>
                     <Form.Group className="form-group">
                         <Button type="submit" className="btn btn-primary">Lagre</Button>

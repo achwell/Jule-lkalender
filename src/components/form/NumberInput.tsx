@@ -1,41 +1,65 @@
-import {FieldError, FieldErrorsImpl, Merge} from "react-hook-form";
+import React from 'react';
+import classNames from 'classnames';
+import get from 'lodash.get';
 
-interface Props {
-    field: string
-    label: string
+import {
+    RegisterOptions,
+    DeepMap,
+    FieldError,
+    UseFormRegister,
+    Path,
+} from 'react-hook-form';
+import {ErrorMessage} from '@hookform/error-message';
+import {Input, InputProps} from "./Input";
+import {FormErrorMessage} from "./FormErrorMessage";
+
+export type FormInputProps<TFormValues> = {
+    name: Path<TFormValues>
+    label?: string
     step?: number | string
     min?: number
     max?: number
     required?: boolean
-    error: FieldError | Merge<FieldError, FieldErrorsImpl<{}>> | undefined
-    register: any
-}
+    rules?: RegisterOptions
+    register: UseFormRegister<TFormValues>
+    errors?: Partial<DeepMap<TFormValues, FieldError>>
+} & Omit<InputProps, 'name,label'>
 
-function NumberInput({field, label, step = "any", max, min, required = false, error, register}: Props) {
-    const options = {}
-    if (!!max) {
-        options[max] = {value: max, message: `Maksimum verdi er ${max}`}
-    }
-    if (!!min) {
-        options[min] = {value: min, message: `Minimum verdi er ${min}`}
-    }
-    if (required) {
-        options[required] = field + " er påkrevet"
-    }
+const NumberInput = <TFormValues extends Record<string, unknown>>({
+                                                                       name,
+                                                                       label,
+                                                                       step = "any",
+                                                                       min,
+                                                                       max,
+                                                                       register,
+                                                                       rules,
+                                                                       errors,
+                                                                       className,
+                                                                       ...props
+                                                                   }: FormInputProps<TFormValues>): JSX.Element => {
+    const errorMessages = get(errors, name);
+    const hasError = !!(errors && errorMessages);
+
     return (
-        <div className="form-group col">
-            <label className="form-label" htmlFor={field}>{label}</label>
-            <input
+        <div className={classNames("form-group col", className)} aria-live="polite">
+            {label && <label className="form-label" htmlFor={name}>{label}</label>}
+            <Input
+                name={name}
                 type="number"
                 step={step}
                 max={max}
                 min={min}
-                className="form-control"
-                {...register(field, options)}
+                aria-invalid={hasError}
+                className={classNames({'invalid': hasError})}
+                {...props}
+                {...(register(name, rules))}
             />
-            {error && <span className="validation-message invalid">{error.message}</span>}
+            <ErrorMessage
+                errors={errors}
+                name={name as any}
+                render={({message}) => <FormErrorMessage className={classNames({'invalid': hasError})}>{message}</FormErrorMessage>}
+            />
         </div>
-    )
-}
-
+    );
+};
 export default NumberInput

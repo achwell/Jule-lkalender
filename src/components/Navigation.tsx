@@ -30,6 +30,12 @@ const Navigation = () => {
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item as="li">
+                            <Nav.Link eventKey="logout" className="text-light" href="/user" >
+                                <span className="oi oi-person" aria-hidden="true"></span>
+                                Min side
+                            </Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item as="li">
                             <Nav.Link eventKey="logout" className="text-light" onClick={() => signOut()}>
                                 <span className="oi oi-account-logout" aria-hidden="true"></span>
                                 Logg ut

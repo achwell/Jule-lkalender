@@ -1,47 +1,61 @@
-import {Dropdown, DropdownButton, Form} from "react-bootstrap";
+import React from 'react';
+import classNames from 'classnames';
+import get from 'lodash.get';
+
 import {
-    Control,
-    Controller,
-    FieldError, FieldErrorsImpl, Merge,
-    UseFormRegisterReturn,
-    UseFormSetValue
-} from "react-hook-form";
+    DeepMap,
+    FieldError,
+    Path,
+    RegisterOptions,
+    UseFormRegister,
+} from 'react-hook-form';
+import {ErrorMessage} from '@hookform/error-message';
+import {Input, InputProps} from "./Input";
+import {FormErrorMessage} from "./FormErrorMessage";
 
-interface Props {
-    field: string
-    label: string
-    options: { key: string, value: string }[]
-    register: UseFormRegisterReturn<string>
-    setValue: UseFormSetValue<any>
-    error: FieldError | Merge<FieldError, FieldErrorsImpl<{}>> | undefined
-    control: Control<any>
+export interface Options {
+    key: string
+    value: string
 }
 
-const DropdownInput = ({field, label, options, register, setValue, error, control}: Props) => {
-    return <Form.Group controlId={field} className="form-group col">
-        <Controller
-            control={control}
-            name={field}
-            render={({field: {onChange, onBlur, value, ref}, fieldState: {invalid, error},}) => (
-                <DropdownButton
-                    {...register}
-                    itemRef={ref.name}
-                    id={field}
-                    title={label}
-                    className={error || invalid ? "invalid" : "valid"}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    defaultValue={value}
-                >
-                    {options.map((value, index) => (
-                        <Dropdown.Item as="button" type="button" key={index}
-                                       onClick={() => setValue(field, value.key)}>{value.value}</Dropdown.Item>
-                    ))}
-                </DropdownButton>
-            )}
-        />
-        {error && <span className="validation-message invalid">{error.message}</span>}
-    </Form.Group>;
-}
+export type FormInputProps<TFormValues> = {
+    name: Path<TFormValues>
+    label?: string
+    options: Options[]
+    rules?: RegisterOptions
+    register: UseFormRegister<TFormValues>
+    errors?: Partial<DeepMap<TFormValues, FieldError>>
+} & Omit<InputProps, 'name,label'>
 
+const DropdownInput = <TFormValues extends Record<string, unknown>>({
+                                                                        name,
+                                                                        label,
+                                                                        options,
+                                                                        register,
+                                                                        rules = {},
+                                                                        errors,
+                                                                        className,
+                                                                        ...props
+                                                                    }: FormInputProps<TFormValues>): JSX.Element => {
+    const errorMessages = get(errors, name);
+    const hasError = !!(errors && errorMessages);
+
+    return (
+        <div className={classNames("form-group col", className)} aria-live="polite">
+            {label && <label className="form-label" htmlFor={name}>{label}</label>}
+            <select {...register(name)}
+                    aria-invalid={hasError}
+                    className={classNames("form-control", className, {'invalid': hasError})}
+                    {...props}>
+                {options.map((option) => <option key={option.key} value={option.key}>{option.value}</option>)}
+            </select>
+            <ErrorMessage
+                errors={errors}
+                name={name as any}
+                render={({message}) => <FormErrorMessage
+                    className={classNames({'invalid': hasError})}>{message}</FormErrorMessage>}
+            />
+        </div>
+    );
+};
 export default DropdownInput

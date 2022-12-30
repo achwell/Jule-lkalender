@@ -12,13 +12,14 @@ import Beer from "../../types/Beer";
 import RemoveBeerModal from "./RemoveBeerModal";
 import AddBeerModal from "./AddBeerModal";
 import BeerCalendar from "../../types/BeerCalendar";
+import {Options} from "../../src/components/form/DropdownInput";
 
 const Admin = () => {
     const router = useRouter()
     const {query: {id}} = router
 
     const [calendarWithBeers, setCalendarWithBeers] = useState<CalendarWithBeer[]>([])
-    const [availableBeers, setAvailableBeers] = useState<{ key: string, value: string }[]>([])
+    const [availableBeers, setAvailableBeers] = useState<Options[]>([])
     const [beer, setBeer] = useState<Beer>()
     const [calendar, setCalendar] = useState<Calendar>()
     const [error, setError] = useState<number>()
